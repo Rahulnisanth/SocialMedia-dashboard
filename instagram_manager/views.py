@@ -22,3 +22,6 @@ def create_instagram_user_access(request, pk):
         return JsonResponse(
             {"success": False, "message": "Unsupported method"}, status=405
         )
+
+def fetch_data_from_account():
+    pass

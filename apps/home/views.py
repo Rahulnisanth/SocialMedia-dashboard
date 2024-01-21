@@ -21,7 +21,6 @@ def pages(request, *args, **kwargs):
         load_template = request.path.split("/")[-1]
         if "link-instagram" in request.path.split("/"):
             load_template = "dashboard-instagram.html"
-            context["page"] = "link-instagram"
 
         print("template in pages -", load_template)
         if load_template == "admin":
