@@ -59,13 +59,11 @@
 
   {% include 'includes/sidebar.html' %}
 
-  <main class="content">
-
-    {% include 'includes/navigation.html' %}
+  <main class="content mt-4">
 
     {% block content %}{% endblock content %}
 
-    <!-- {% include 'includes/footer.html' %} -->
+    {% include 'includes/footer.html' %}
 
   </main>
 
