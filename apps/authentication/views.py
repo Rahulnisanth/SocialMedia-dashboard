@@ -1,7 +1,7 @@
 # Create your views here.
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
-from .forms import LoginForm, SignUpForm
+from .forms import LoginForm, SignUpForm, ProfileForm
 
 
 def login_view(request):
@@ -52,3 +52,15 @@ def register_user(request):
         "accounts/register.html",
         {"form": form, "msg": msg, "success": success},
     )
+
+
+def editProfile(request):
+    profile = request.user
+    form = ProfileForm(instance=profile)
+    if request.method == "POST":
+        form = ProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect("/")
+    context = {"form": form}
+    return render(request, "home/profile-form.html", context)
