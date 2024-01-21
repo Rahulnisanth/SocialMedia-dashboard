@@ -44,8 +44,7 @@
                     <div class="col-md-6 mb-3">
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input class="form-control" id="email" type="email" placeholder="name@company.com"
-                                value="{{ request.user.email }}" readonly>
+                            {{form.email}}
                         </div>
                     </div>
                 </div>
@@ -102,7 +101,7 @@
                 <div class="card shadow border-0 text-center p-0">
                     <div class="profile-cover rounded-top" data-background="/static/assets/img/profile-cover.jpg"></div>
                     <div class="card-body pb-3">
-                        <img src="/static/assets/img/team/profile-picture-1.jpg"
+                        <img src="{{request.user.profile.profile_picture.url}}"
                             class="avatar-xl rounded-circle mx-auto mt-n7 mb-4" alt="Neil Portrait">
                         <h4 class="h3">
                             {{ request.user.username }}

@@ -2,6 +2,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from .forms import LoginForm, SignUpForm, ProfileForm
+from .models import Profile
 
 
 def login_view(request):
@@ -32,15 +33,16 @@ def register_user(request):
     if request.method == "POST":
         form = SignUpForm(request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save()
             username = form.cleaned_data.get("username")
             raw_password = form.cleaned_data.get("password1")
             user = authenticate(username=username, password=raw_password)
 
+            # Create a profile for the user
+            profile = Profile.objects.create(user=user)
+
             msg = 'User created - please <a href="/login">login</a>.'
             success = True
-
-            # return redirect("/login/")
 
         else:
             msg = "Form is not valid"
