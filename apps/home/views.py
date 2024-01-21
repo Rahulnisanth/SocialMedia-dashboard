@@ -15,7 +15,7 @@ def index(request):
 
 
 @login_required(login_url="/login/")
-def pages(request):
+def pages(request, *args, **kwargs):
     context = {}
     try:
         load_template = request.path.split("/")[-1]
@@ -28,13 +28,16 @@ def pages(request):
         if load_template == "dashboard-instagram.html":
             user = request.user
             user_instagram = Instagram.objects.filter(main_user=user)
-
+            
             if list(user_instagram) != []:
                 context["instagram"] = list(user_instagram)[0]
                 context["has_instagram"] = True
             else:
                 context["has_instagram"] = False
 
+            if kwargs and kwargs['link-instagram']:
+                context["page"] = 'link-instagram'
+                
             print("context -", context)
         return HttpResponse(html_template.render(context, request))
 
