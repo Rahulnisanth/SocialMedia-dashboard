@@ -5,6 +5,16 @@
   font-family: 'Ubuntu', sans-serif;
 }
 
+::-webkit-scrollbar {
+  width: 10px;
+  background-color: #aaa;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #1F2937;
+  border-radius: 2px;
+}
+
 .datepicker {
   display: none;
 }

@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,12 +25,12 @@
   <!-- Font Awesome icons -->
   <script src="https://kit.fontawesome.com/14e8c0ae6a.js" crossorigin="anonymous"></script>
   <!-- Favicon -->
-  <link rel="icon" type="image/png" sizes="32x32" href="/static/assets/img/brand/light.svg">
-  <link rel="icon" type="image/png" sizes="16x16" href="/static/assets/img/brand/light.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'assets/img/brand/light.svg' %}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{% static 'assets/img/brand/light.svg' %}">
   <!-- STYLESHEETS -->
-  <link type="text/css" href="/static/assets/vendor/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
-  <link type="text/css" href="/static/assets/vendor/notyf/notyf.min.css" rel="stylesheet">
-  <link type="text/css" href="/static/assets/css/volt.css" rel="stylesheet">
+  <link type="text/css" href="{% static 'assets/vendor/sweetalert2/dist/sweetalert2.min.css' %}" rel="stylesheet">
+  <link type="text/css" href="{% static 'assets/vendor/notyf/notyf.min.css' %}" rel="stylesheet">
+  <link type="text/css" href="{% static 'assets/css/volt.css' %}" rel="stylesheet">
 
   <!-- Specific Page JS goes HERE  -->
   {% block stylesheets %}{% endblock stylesheets %}
