@@ -1,7 +1,3 @@
-# -*- encoding: utf-8 -*-
-"""
-Copyright (c) 2019 - present AppSeed.us
-"""
 
 import os
 from decouple import config
@@ -108,7 +104,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-#############################################################
+
 # SRC: https://devcenter.heroku.com/articles/django-assets
 
 # Static files (CSS, JavaScript, Images)
@@ -121,6 +117,3 @@ STATICFILES_DIRS = (
     os.path.join(CORE_DIR, 'apps/static'),
 )
 
-
-#############################################################
-#############################################################
