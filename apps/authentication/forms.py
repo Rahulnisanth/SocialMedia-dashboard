@@ -64,4 +64,10 @@ class ProfileForm(ModelForm):
         super(ProfileForm, self).__init__(*args, **kwargs)
 
         for name, field in self.fields.items():
-            field.widget.attrs.update({"class": "form-control"})
+            field.widget.attrs.update(
+                {
+                    "class": "form-control",
+                    "placeholder": f"Enter your {name}",
+                    "required": "True",
+                }
+            )

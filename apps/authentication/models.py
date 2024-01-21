@@ -8,8 +8,7 @@ class Profile(models.Model):
     profile_picture = models.ImageField(
         null=True,
         blank=True,
-        default="static/assets/img/profile-cover.jpg",
-        upload_to="media/profiles/",
+        default="static/assets/img/profile_pic.jpg",
     )
     firstname = models.CharField(max_length=200, null=True, blank=True)
     lastname = models.CharField(max_length=200, null=True, blank=True)
