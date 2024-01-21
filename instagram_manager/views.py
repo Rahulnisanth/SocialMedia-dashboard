@@ -2,11 +2,7 @@ from django.http import JsonResponse, HttpResponse
 from django.shortcuts import redirect, render
 from .serializers import FetchInstagramUserData
 
-
 def create_instagram_user_access(request, pk):
-    return redirect("")
-    
-    
     if request.method == "POST":
         user_data = request.POST.get("user_data", None)
 

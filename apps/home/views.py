@@ -19,7 +19,11 @@ def pages(request, *args, **kwargs):
     context = {}
     try:
         load_template = request.path.split("/")[-1]
-        print("template -", load_template)
+        if "link-instagram" in request.path.split("/"):
+            load_template = "dashboard-instagram.html"
+            context["page"] = "link-instagram"
+
+        print("template in pages -", load_template)
         if load_template == "admin":
             return HttpResponseRedirect(reverse("admin:index"))
         context["segment"] = load_template
@@ -28,16 +32,16 @@ def pages(request, *args, **kwargs):
         if load_template == "dashboard-instagram.html":
             user = request.user
             user_instagram = Instagram.objects.filter(main_user=user)
-            
+
             if list(user_instagram) != []:
                 context["instagram"] = list(user_instagram)[0]
                 context["has_instagram"] = True
             else:
                 context["has_instagram"] = False
 
-            if kwargs and kwargs['link-instagram']:
-                context["page"] = 'link-instagram'
-                
+            if kwargs and kwargs["link-instagram"]:
+                context["page"] = "link-instagram"
+
             print("context -", context)
         return HttpResponse(html_template.render(context, request))
 
