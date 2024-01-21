@@ -4,7 +4,6 @@ username = 'teamvoltanalysis'
 password = "TeamVoltAnalysis@user"
 # userS = '_.nxvin._08'
 # userS = 'mattimadhan'
-userS = 'madhus1862'
 
 
 l = instaloader.Instaloader()

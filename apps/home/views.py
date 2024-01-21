@@ -30,16 +30,13 @@ def pages(request, *args, **kwargs):
         html_template = loader.get_template("home/" + load_template)
         if load_template == "dashboard-instagram.html":
             user = request.user
-            user_instagram = Instagram.objects.filter(main_user=user)
+            user_instagram = Instagram.objects.filter(main_user=user.profile)
 
             if list(user_instagram) != []:
                 context["instagram"] = list(user_instagram)[0]
                 context["has_instagram"] = True
             else:
                 context["has_instagram"] = False
-
-            if kwargs and kwargs["link-instagram"]:
-                context["page"] = "link-instagram"
 
             print("context -", context)
         return HttpResponse(html_template.render(context, request))
