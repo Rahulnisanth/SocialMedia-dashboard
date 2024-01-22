@@ -2,22 +2,33 @@ from django.http import JsonResponse, HttpResponse
 from django.shortcuts import redirect, render
 from .serializers import FetchInstagramUserData, FetchTopFollowers
 from .forms import InstagramForm
-from .models import Instagram, Account, Post
+from .models import Instagram, Account, Post, TopFollowers
 from apps.authentication.models import Profile
 
 
 def create_instagram_user_access(request, pk=None):
+    link_form = InstagramForm()
+
     if request.method == "POST":
         link_form = InstagramForm(request.POST)
 
         if link_form.is_valid():
             temp = link_form.save(commit=False)
             temp.main_user = request.user.profile
-            temp.save()
 
-            data = FetchInstagramUserData(temp)
-            print(data)
-
+            data = FetchInstagramUserData(temp, temp)
+            print("Data after: " ,data)
+            if data == {"status": "BadCredentialsException"}:
+                return render(
+                    request,
+                    "home/dashboard-instagram.html",
+                    {
+                        "has_instagram": False,
+                        'page': 'link-instagram',
+                        "form": link_form,
+                        'msg':"Invalid Credentials"
+                    },
+                )
             return redirect(
                 "home/dashboard-instagram.html",
                 {"has_instagram": True},
@@ -35,34 +46,47 @@ def create_instagram_user_access(request, pk=None):
     if list(user_instagram) != []:
         user_instagram = Instagram.objects.get(main_user=user_profile)
         user_instagram_account = Account.objects.get(user_id=user_instagram)
+        user_top_follower = TopFollowers.objects.get(user_id=user_instagram)
+        user_top_followers = user_top_follower.top_followers
+        print("top_followers", user_top_followers)
         try:
-            user_instagram_post = Post.objects.get(user_id=user_instagram)
+            user_instagram_post = list(Post.objects.filter(user_id=user_instagram))
+            print("post"    , user_instagram_post)
         except Exception as e:
             if e == "Post matching query does not exist.":
                 user_instagram_post = "No posts yet"
 
-        # top_followers = FetchTopFollowers(user_instagram)
-        top_followers = None
         print(
             "Inside create_instagram_user_access",
             user_instagram,
             user_instagram_account,
             user_instagram_post,
-            top_followers,
+            user_top_followers,
         )
 
+        if user_top_followers != '':
+            return render(
+                request,
+                "home/dashboard-instagram.html",
+                {
+                    "has_instagram": True,
+                    "instagram":user_instagram,
+                    "account": user_instagram_account,
+                    "posts": user_instagram_post,
+                    "top_followers": eval(user_top_followers),
+                },
+            )
         return render(
-            request,
-            "home/dashboard-instagram.html",
-            {
-                "has_instagram": True,
-                "account": user_instagram_account,
-                "posts": user_instagram_post,
-                "top_followers": top_followers,
-            },
-        )
+                request,
+                "home/dashboard-instagram.html",
+                {
+                    "has_instagram": True,
+                    "instagram":user_instagram,
+                    "account": user_instagram_account,
+                    "posts": user_instagram_post,
+                },
+            )
 
-    link_form = InstagramForm()
     return render(
         request,
         "home/dashboard-instagram.html",

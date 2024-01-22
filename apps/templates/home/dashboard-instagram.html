@@ -300,7 +300,8 @@
                                     <div class="col-auto">
                                         <!-- Avatar -->
                                         <a href="{{data.profile}}" class="avatar">
-                                            <img class="rounded" alt="Profile" src="{{data.profile}}" />
+                                            <img class="rounded" alt="Profile"
+                                                src="/static/assets/img/profile_pic.jpg" />
                                         </a>
                                     </div>
                                     <div class="col-auto ms--2">
@@ -347,7 +348,7 @@
                             <div class="col">
                                 <div class="progress-wrapper">
                                     <div class="progress-info">
-                                        <div class="h6 mb-0">{{post.name}}</div>
+                                        <div class="h6 mb-0">{{post.post_caption}}</div>
                                         <div class="small fw-bold text-gray-500"><span>{{post.likes}}</span></div>
                                     </div>
                                     <div class="progress mb-0">
@@ -505,8 +506,8 @@
                                 </svg>
                             </div>
                             <div class="d-block">
-                                <label class="mb-0">Sessions</label>
-                                <h4 class="mb-0">9,567</h4>
+                                <label class="mb-0">Impressions</label>
+                                <h4 class="mb-0">1232</h4>
                             </div>
                         </div>
                     </div>
@@ -592,7 +593,7 @@
 </section>
 
 {% else %}
-{{page}}
+<!-- {{page}} -->
 <main>
     <section class="d-flex align-items-center justify-content-center" style="height: 70vh;">
         <div class="container">

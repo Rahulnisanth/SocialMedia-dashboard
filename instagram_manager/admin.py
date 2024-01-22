@@ -5,3 +5,4 @@ from .models import *
 admin.site.register(Instagram)
 admin.site.register(Post)
 admin.site.register(Account)
+admin.site.register(TopFollowers)
