@@ -78,17 +78,18 @@ def create_instagram_user_access(request, pk=None):
                     "top_followers": eval(user_top_followers),
                 },
             )
-        return render(
-            request,
-            "home/dashboard-instagram.html",
-            {
-                "segment": "dashboard-instagram",
-                "has_instagram": True,
-                "instagram": user_instagram,
-                "account": user_instagram_account,
-                "posts": user_instagram_post,
-            },
-        )
+        else:
+            return render(
+                request,
+                "dashboard-instagram.html",
+                {
+                    "segment": "dashboard-instagram",
+                    "has_instagram": True,
+                    "instagram": user_instagram,
+                    "account": user_instagram_account,
+                    "posts": user_instagram_post,
+                },
+            )
     elif pk != None:
         return render(
         request,
@@ -105,7 +106,6 @@ def create_instagram_user_access(request, pk=None):
         "home/dashboard-instagram.html",
         {
             "segment": "dashboard-instagram",
-            # "page": "link-instagram",
             "form": link_form,
         },
     )
@@ -113,3 +113,10 @@ def create_instagram_user_access(request, pk=None):
 
 def fetch_data_from_account():
     pass
+
+def delete_instagram_user_access(request, pk):
+    
+    instagram_account = Instagram.objects.get(user_id=pk)
+    print("instagram_account", instagram_account)
+    
+    return create_instagram_user_access(request)
