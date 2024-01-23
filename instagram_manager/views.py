@@ -17,21 +17,22 @@ def create_instagram_user_access(request, pk=None):
             temp.main_user = request.user.profile
 
             data = FetchInstagramUserData(temp, temp)
-            print("Data after: " ,data)
+            print("Data after: ", data)
             if data == {"status": "BadCredentialsException"}:
                 return render(
                     request,
                     "home/dashboard-instagram.html",
                     {
+                        "segment": "dashboard-instagram",
                         "has_instagram": False,
-                        'page': 'link-instagram',
+                        "page": "link-instagram",
                         "form": link_form,
-                        'msg':"Invalid Credentials"
+                        "msg": "Invalid Credentials",
                     },
                 )
             return redirect(
                 "home/dashboard-instagram.html",
-                {"has_instagram": True},
+                {"has_instagram": True, "segment": "dashboard-instagram"},
             )
 
         else:
@@ -51,7 +52,7 @@ def create_instagram_user_access(request, pk=None):
         print("top_followers", user_top_followers)
         try:
             user_instagram_post = list(Post.objects.filter(user_id=user_instagram))
-            print("post"    , user_instagram_post)
+            print("post", user_instagram_post)
         except Exception as e:
             if e == "Post matching query does not exist.":
                 user_instagram_post = "No posts yet"
@@ -64,34 +65,47 @@ def create_instagram_user_access(request, pk=None):
             user_top_followers,
         )
 
-        if user_top_followers != '':
+        if user_top_followers != "":
             return render(
                 request,
                 "home/dashboard-instagram.html",
                 {
+                    "segment": "dashboard-instagram",
                     "has_instagram": True,
-                    "instagram":user_instagram,
+                    "instagram": user_instagram,
                     "account": user_instagram_account,
                     "posts": user_instagram_post,
                     "top_followers": eval(user_top_followers),
                 },
             )
-        return render(
+        else:
+            return render(
                 request,
-                "home/dashboard-instagram.html",
+                "dashboard-instagram.html",
                 {
+                    "segment": "dashboard-instagram",
                     "has_instagram": True,
-                    "instagram":user_instagram,
+                    "instagram": user_instagram,
                     "account": user_instagram_account,
                     "posts": user_instagram_post,
                 },
             )
+    elif pk != None:
+        return render(
+        request,
+        "home/dashboard-instagram.html",
+        {
+            "segment": "dashboard-instagram",
+            "page": "link-instagram",
+            "form": link_form,
+        },
+    )
 
     return render(
         request,
         "home/dashboard-instagram.html",
         {
-            "page": "link-instagram",
+            "segment": "dashboard-instagram",
             "form": link_form,
         },
     )   
@@ -99,3 +113,10 @@ def create_instagram_user_access(request, pk=None):
 
 def fetch_data_from_account():
     pass
+
+def delete_instagram_user_access(request, pk):
+    
+    instagram_account = Instagram.objects.get(user_id=pk)
+    print("instagram_account", instagram_account)
+    
+    return create_instagram_user_access(request)
